@@ -1,13 +1,13 @@
 package com.example.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+
 
 import com.example.entities.Estudiante;
 /**
  * Comentario en formato Javadoc, ordena por clases 
  */
-@Repository //aquí busca los beans, tiene los métodos, no hace falta ninguna clase que implemente 
+ //aquí busca los beans, tiene los métodos, no hace falta ninguna clase que implemente 
 
 public interface EstudianteDao extends JpaRepository<Estudiante,Integer> {
 
