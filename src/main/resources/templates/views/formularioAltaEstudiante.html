@@ -60,11 +60,13 @@
 
       
        <label for="idFacultad"> Facultad </label>
-       <select name="facultad" id="idFacultad" required>
+
+       <select name="idFacultad" id="idFacultad" required>
 
         <option></option>
-        <option value="1">Informatica</option>
-        <option value="2">Matematicas</option>
+        <option th:each="facultad : ${facultades}" th:value="${facultad.id}"
+        th:text="${facultad.nombre}"></option>
+        
 
 
 
