@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -55,6 +56,7 @@ private EstudianteService estudianteService;
 
 
 
+
 @GetMapping("/frm")
     public String formularioAltaEstudiante(Model model){
 
@@ -62,6 +64,15 @@ private EstudianteService estudianteService;
         model.addAttribute("estudiante", new Estudiante());
         return "views/formularioAltaEstudiante";
     }
+
+@PostMapping("/altaEstudiante")
+public String altaEstudiante(){
+
+
+    return "redirect:/listar";
+}
+
+
 }
 
 

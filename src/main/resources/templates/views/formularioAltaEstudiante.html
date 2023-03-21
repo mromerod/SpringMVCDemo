@@ -20,7 +20,7 @@
         <input type="submit" value="Enviar">
 
     </form> -->
-    <form th:object="${estudiante}" >
+    <form th:object="${estudiante}" th:action="@{/altaEstudiante}" method="post">
 
         <label for="nombre">Nombre :</label>
         <input type="text" name="'nombre" id="nombre" th:field="*{nombre}" required> 
