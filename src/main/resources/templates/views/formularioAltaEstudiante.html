@@ -58,16 +58,11 @@
        <label for="beca"> Beca</label>
        <input type="text" id="beca" name="beca" th:field="*{beca}" required>
 
-      
-       <label for="idFacultad"> Facultad </label>
-       <select name="facultad" id="idFacultad" required>
-
-        <option></option>
-        <option value="1">Informatica</option>
-        <option value="2">Matematicas</option>
-
-
-
+       <label for="idFacultad">Facultad: </label>
+       <select name="facultad" id="idFacultad" required> 
+           <option></option>
+           <option th:each=" fac : ${facultades}" th:value="${fac.id}" 
+                       th:text="${fac.nombre}"></option>
        </select>
 
        <input type="submit" value="Alta">
