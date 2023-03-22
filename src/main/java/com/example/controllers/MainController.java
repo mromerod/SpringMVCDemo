@@ -1,6 +1,8 @@
 package com.example.controllers;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,21 +11,27 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.entities.Estudiante;
 import com.example.entities.Facultad;
+import com.example.entities.Telefono;
 import com.example.services.EstudianteService;
 import com.example.services.FacultadService;
+import com.example.services.TelefonoService;
 
 @Controller
 @RequestMapping("/") //para hacer peticiones, las url que va a recibir, manda todo lo que termine en /
 public class MainController {
+    private static final Logger LOG = Logger.getLogger("MainController"); //para mensajes si todo peta
 
 @Autowired
 private EstudianteService estudianteService;
 @Autowired
 private FacultadService facultadService;
+@Autowired
+private TelefonoService telefonoService;
 
 
 /**
@@ -74,8 +82,41 @@ private FacultadService facultadService;
     }
 
 @PostMapping("/altaEstudiante")
-public String altaEstudiante(@ModelAttribute Estudiante estudiante){
- estudianteService.save(estudiante);
+
+public String altaEstudiante(@ModelAttribute Estudiante estudiante,
+ @RequestParam(name = "numerosTelefonos") String telefonosrecibidos){
+
+    LOG.info("telefonos recibidos:" + telefonosrecibidos);
+
+    List<String> listadoNumerosTelefonos = null; //la declara fuera para poder usarla
+
+
+if(telefonosrecibidos != null) {
+    String[] arrayTelefonos = telefonosrecibidos.split(";"); // covierte los telefonos en un 
+    //array y los separa por ;
+    listadoNumerosTelefonos = Arrays.asList(arrayTelefonos);
+}
+    estudianteService.save(estudiante);
+    
+    if(listadoNumerosTelefonos != null) {
+
+        listadoNumerosTelefonos.stream().forEach(n -> {
+
+        Telefono telefonoObjet = Telefono
+                .builder()
+                .numero(n)
+                .estudiante(estudiante)
+                .build();
+
+                telefonoService.save(telefonoObjet);
+    
+    
+    }
+        
+        
+        );  
+
+    }
 
     return "redirect:/listar";
 }
